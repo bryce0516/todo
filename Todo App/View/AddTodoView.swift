@@ -48,7 +48,13 @@ struct AddTodoView: View {
               } catch {
                 print(error)
               }
+            } else {
+              self.errorShowing = true
+              self.errorTitle = "Invalid Name"
+              self.errorMessage = "Make sure to enter something for\nthe new todo item."
+              return
             }
+            self.presetationMode.wrappedValue.dismiss()
           }, label: {
             Text("Save")
           })
@@ -68,6 +74,9 @@ struct AddTodoView: View {
           })
         }
       }
+      .alert(isPresented: $errorShowing, content: {
+        Alert(title: Text(errorTitle), message: Text(errorMessage), dismissButton: .default(Text("OK")))
+      })
     } // END: NAVIGATION VIEW
   }
 }
